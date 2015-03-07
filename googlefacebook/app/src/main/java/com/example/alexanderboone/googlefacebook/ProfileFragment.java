@@ -23,7 +23,7 @@ import com.github.gorbin.asne.core.persons.SocialPerson;
 import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
 import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
-import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
+
 import com.squareup.picasso.Picasso;
 
 public class ProfileFragment extends Fragment implements OnRequestSocialPersonCompleteListener {
@@ -37,7 +37,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private TextView name;
     private TextView id;
     private TextView info;
-    private Button friends;
+
     private Button share;
     private RelativeLayout frame;
 
@@ -66,8 +66,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         name = (TextView) rootView.findViewById(R.id.name);
         id = (TextView) rootView.findViewById(R.id.id);
         info = (TextView) rootView.findViewById(R.id.info);
-        friends = (Button) rootView.findViewById(R.id.friends);
-        friends.setOnClickListener(friendsClick);
+
         share = (Button) rootView.findViewById(R.id.share);
         share.setOnClickListener(shareClick);
         colorProfile(networkId);
@@ -117,16 +116,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         Toast.makeText(getActivity(), "ERROR: " + errorMessage, Toast.LENGTH_LONG).show();
     }
 
-    private View.OnClickListener friendsClick = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            FriendsFragment friends = FriendsFragment.newInstannce(networkId);
-            getActivity().getSupportFragmentManager().beginTransaction()
-                    .addToBackStack("friends")
-                    .replace(R.id.container, friends)
-                    .commit();
-        }
-    };
+
 
     private View.OnClickListener shareClick = new View.OnClickListener() {
         @Override
@@ -175,14 +165,11 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         int color = getResources().getColor(R.color.dark);
         int image = R.drawable.user;
         switch (networkId) {
-            case TwitterSocialNetwork.ID:
-                color = getResources().getColor(R.color.twitter);
-                image = R.drawable.user;
-                break;
+            /*
             case LinkedInSocialNetwork.ID:
                 color = getResources().getColor(R.color.linkedin);
                 image = R.drawable.user;
-                break;
+                break;*/
             case GooglePlusSocialNetwork.ID:
                 color = getResources().getColor(R.color.googleplus);
                 image = R.drawable.user;
@@ -194,7 +181,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
         }
         frame.setBackgroundColor(color);
         name.setTextColor(color);
-        friends.setBackgroundColor(color);
+
         share.setBackgroundColor(color);
         photo.setBackgroundColor(color);
         photo.setImageResource(image);

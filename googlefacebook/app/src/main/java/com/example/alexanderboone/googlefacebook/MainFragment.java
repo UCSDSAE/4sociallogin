@@ -14,7 +14,7 @@ import com.github.gorbin.asne.core.listener.OnLoginCompleteListener;
 import com.github.gorbin.asne.facebook.FacebookSocialNetwork;
 import com.github.gorbin.asne.googleplus.GooglePlusSocialNetwork;
 import com.github.gorbin.asne.linkedin.LinkedInSocialNetwork;
-import com.github.gorbin.asne.twitter.TwitterSocialNetwork;
+
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,8 +33,8 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
      * 7 - Instagram
      */
     private Button facebook;
-    private Button twitter;
-    private Button linkedin;
+
+    //private Button linkedin;
     private Button googleplus;
 
     public MainFragment() {
@@ -48,17 +48,14 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         // init buttons and set Listener
         facebook = (Button) rootView.findViewById(R.id.facebook);
         facebook.setOnClickListener(loginClick);
-        twitter = (Button) rootView.findViewById(R.id.twitter);
-        twitter.setOnClickListener(loginClick);
-        linkedin = (Button) rootView.findViewById(R.id.linkedin);
-        linkedin.setOnClickListener(loginClick);
+
+        //linkedin = (Button) rootView.findViewById(R.id.linkedin);
+        //linkedin.setOnClickListener(loginClick);
         googleplus = (Button) rootView.findViewById(R.id.googleplus);
         googleplus.setOnClickListener(loginClick);
 
         //Get Keys for initiate SocialNetworks
-        String TWITTER_CONSUMER_KEY = getActivity().getString(R.string.twitter_consumer_key);
-        String TWITTER_CONSUMER_SECRET = getActivity().getString(R.string.twitter_consumer_secret);
-        String TWITTER_CALLBACK_URL = "oauth://ASNE";
+
         String LINKEDIN_CONSUMER_KEY = getActivity().getString(R.string.linkedin_consumer_key);
         String LINKEDIN_CONSUMER_SECRET = getActivity().getString(R.string.linkedin_consumer_secret);
         String LINKEDIN_CALLBACK_URL = "https://asneTutorial";
@@ -79,9 +76,7 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
             FacebookSocialNetwork fbNetwork = new FacebookSocialNetwork(this, fbScope);
             mSocialNetworkManager.addSocialNetwork(fbNetwork);
 
-            //Init and add to manager TwitterSocialNetwork
-            TwitterSocialNetwork twNetwork = new TwitterSocialNetwork(this, TWITTER_CONSUMER_KEY, TWITTER_CONSUMER_SECRET, TWITTER_CALLBACK_URL);
-            mSocialNetworkManager.addSocialNetwork(twNetwork);
+
 
             //Init and add to manager LinkedInSocialNetwork
             LinkedInSocialNetwork liNetwork = new LinkedInSocialNetwork(this, LINKEDIN_CONSUMER_KEY, LINKEDIN_CONSUMER_SECRET, LINKEDIN_CALLBACK_URL, linkedInScope);
@@ -111,16 +106,14 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         if(socialNetwork.isConnected()){
             switch (socialNetwork.getID()){
                 case FacebookSocialNetwork.ID:
-                    facebook.setText("Show Facebook profile");
+                    facebook.setText("Logged in to Facebook");
                     break;
-                case TwitterSocialNetwork.ID:
-                    twitter.setText("Show Twitter profile");
-                    break;
-                case LinkedInSocialNetwork.ID:
+
+                /*case LinkedInSocialNetwork.ID:
                     linkedin.setText("Show LinkedIn profile");
-                    break;
+                    break;*/
                 case GooglePlusSocialNetwork.ID:
-                    googleplus.setText("Show GooglePlus profile");
+                    googleplus.setText("Logged in to Google+");
                     break;
             }
         }
@@ -144,12 +137,10 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
                 case R.id.facebook:
                     networkId = FacebookSocialNetwork.ID;
                     break;
-                case R.id.twitter:
-                    networkId = TwitterSocialNetwork.ID;
-                    break;
+                /*
                 case R.id.linkedin:
                     networkId = LinkedInSocialNetwork.ID;
-                    break;
+                    break;*/
                 case R.id.googleplus:
                     networkId = GooglePlusSocialNetwork.ID;
                     break;
