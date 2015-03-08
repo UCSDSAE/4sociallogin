@@ -154,7 +154,8 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
                     Toast.makeText(getActivity(), "Wrong networkId", Toast.LENGTH_LONG).show();
                 }
             } else {
-                startProfile(socialNetwork.getID());
+                //startProfile(socialNetwork.getID());
+                startTransition(networkId);
             }
         }
     };
@@ -162,7 +163,8 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
     @Override
     public void onLoginSuccess(int networkId) {
         MainActivity.hideProgress();
-        startProfile(networkId);
+        //startProfile(networkId);
+        startTransition(networkId);
     }
 
     @Override
@@ -176,6 +178,15 @@ public class MainFragment extends Fragment implements SocialNetworkManager.OnIni
         getActivity().getSupportFragmentManager().beginTransaction()
                 .addToBackStack("profile")
                 .replace(R.id.container, profile)
+                .commit();
+    }
+
+    private void startTransition(int networkId) {
+        TransitionFragment trans = TransitionFragment.newInstance(networkId);
+        Toast.makeText(getActivity(), "Transitioning...", Toast.LENGTH_LONG).show();
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .addToBackStack("transition")
+                .replace(R.id.container, trans)
                 .commit();
     }
 }

@@ -69,7 +69,7 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
 
         share = (Button) rootView.findViewById(R.id.share);
         share.setOnClickListener(shareClick);
-        colorProfile(networkId);
+
 
         socialNetwork = MainFragment.mSocialNetworkManager.getSocialNetwork(networkId);
         socialNetwork.setOnRequestCurrentPersonCompleteListener(this);
@@ -121,77 +121,8 @@ public class ProfileFragment extends Fragment implements OnRequestSocialPersonCo
     private View.OnClickListener shareClick = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            AlertDialog.Builder ad = alertDialogInit("Would you like to post Link:", link);
-            ad.setPositiveButton("Post link", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    Bundle postParams = new Bundle();
-                    postParams.putString(SocialNetwork.BUNDLE_NAME, "Simple and easy way to add social networks for android application");
-                    postParams.putString(SocialNetwork.BUNDLE_LINK, link);
-                    if(networkId == GooglePlusSocialNetwork.ID) {
-                        socialNetwork.requestPostDialog(postParams, postingComplete);
-                    } else {
-                        socialNetwork.requestPostLink(postParams, message, postingComplete);
-                    }
-                }
-            });
-            ad.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int i) {
-                    dialog.cancel();
-                }
-            });
-            ad.setOnCancelListener(new DialogInterface.OnCancelListener() {
-                public void onCancel(DialogInterface dialog) {
-                    dialog.cancel();
-                }
-            });
-            ad.create().show();
+
         }
     };
 
-    private OnPostingCompleteListener postingComplete = new OnPostingCompleteListener() {
-        @Override
-        public void onPostSuccessfully(int socialNetworkID) {
-            Toast.makeText(getActivity(), "Sent", Toast.LENGTH_LONG).show();
-        }
-
-        @Override
-        public void onError(int socialNetworkID, String requestID, String errorMessage, Object data) {
-            Toast.makeText(getActivity(), "Error while sending: " + errorMessage, Toast.LENGTH_LONG).show();
-        }
-    };
-
-    private void colorProfile(int networkId){
-        int color = getResources().getColor(R.color.dark);
-        int image = R.drawable.user;
-        switch (networkId) {
-            /*
-            case LinkedInSocialNetwork.ID:
-                color = getResources().getColor(R.color.linkedin);
-                image = R.drawable.user;
-                break;*/
-            case GooglePlusSocialNetwork.ID:
-                color = getResources().getColor(R.color.googleplus);
-                image = R.drawable.user;
-                break;
-            case FacebookSocialNetwork.ID:
-                color = getResources().getColor(R.color.facebook);
-                image = R.drawable.com_facebook_profile_picture_blank_square;
-                break;
-        }
-        frame.setBackgroundColor(color);
-        name.setTextColor(color);
-
-        share.setBackgroundColor(color);
-        photo.setBackgroundColor(color);
-        photo.setImageResource(image);
-    }
-
-    private AlertDialog.Builder alertDialogInit(String title, String message){
-        AlertDialog.Builder ad = new AlertDialog.Builder(getActivity());
-        ad.setTitle(title);
-        ad.setMessage(message);
-        ad.setCancelable(true);
-        return ad;
-    }
 }
